@@ -18,3 +18,5 @@ app.use(cors()); // TLDR allow dif origin to HTTP to this server
 app.listen(port, () => {
   console.log(`Server started at port ${port}`);
 });
+
+// checking
