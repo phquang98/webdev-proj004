@@ -1,6 +1,6 @@
-# Template Backend - Postgres Edition
+# Template Backend Pure
 
-Tech: TS + Express + TypeORM
+Tech: TS + Express
 
 ## Run
 
