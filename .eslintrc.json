@@ -51,7 +51,7 @@
         "allowModules": ["morgan", "cors"]
       }
     ],
-    "@typescript-eslint/explicit-function-return-type": ["off"], // controversial
+    "@typescript-eslint/explicit-function-return-type": ["warn"], // controversial
     "@typescript-eslint/explicit-module-boundary-types": ["off"], // controversial
     "@typescript-eslint/no-explicit-any": ["off"], // controlversial
     "prettier/prettier": ["warn", {}, { "usePrettierrc": true }]
