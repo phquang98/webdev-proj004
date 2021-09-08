@@ -1,15 +1,14 @@
-# Template Backend Pure
+# Template Backend GraphQL Postgres
 
-Tech: TS + Express
+Tech: TS + Express + Node + PostgreSQL + GraphQL
 
 ## Run
 
 - `npm i`
+- `npm run build`
 - `npm start`
 
-## Replicate
-
-- `npm i dotenv express`
-- `npm i -D @types/express @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser cors @types/cors eslint eslint-config-prettier eslint-plugin-import eslint-plugin-node eslint-plugin-prettier husky@4.3.8 lint-staged nodemon @types/morgan morgan prettier typescript`
-
 ## Explain
+
+- `/config`: make cxn to the db
+- `/app.ts`: create a GraphQL server based on Apollo lib -> create Express server -> wrap GraphQL server around Express server -> start cxn to DB
