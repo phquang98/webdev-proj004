@@ -11,6 +11,7 @@ import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-co
 
 import { makeCXNtoDB } from "./config";
 import { HelloResolver } from "./resolvers/hello";
+import { UserResolver } from "./resolvers/user";
 
 // --- Config + Initiate server ---
 dotenv.config();
@@ -26,7 +27,7 @@ app.use(cors());
 const startGraphQLServer = async () => {
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [HelloResolver],
+      resolvers: [HelloResolver, UserResolver],
       validate: false
     }),
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()]
