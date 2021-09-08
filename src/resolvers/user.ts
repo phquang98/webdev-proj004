@@ -2,17 +2,14 @@ import argon2 from "argon2";
 import { Arg, Mutation, Resolver } from "type-graphql";
 
 import { User } from "../models/User";
+import { RegisterInput } from "../types/register_input";
 import { UserMutationResponse } from "../types/user_mutation_res";
 
 @Resolver()
 export class UserResolver {
   @Mutation((_return) => UserMutationResponse, { nullable: true })
   // ? need to transform all these args from TS -> type-graphql -> using @Arg decorator
-  async register(
-    @Arg("email") email: string,
-    @Arg("username") username: string,
-    @Arg("password") password: string
-  ): Promise<UserMutationResponse> {
+  async register(@Arg("registerInput") { username, password, email }: RegisterInput): Promise<UserMutationResponse> {
     try {
       const existingUser = await User.findOne({
         where: [{ username }, { email }]
