@@ -1,4 +1,4 @@
-# Template Backend GraphQL Postgres
+# GraphQL + PostgreSQL Basic Exercise
 
 Tech: TS + Express + Node + PostgreSQL + GraphQL
 
@@ -7,8 +7,3 @@ Tech: TS + Express + Node + PostgreSQL + GraphQL
 - `npm i`
 - `npm run build`
 - `npm start`
-
-## Explain
-
-- `/config`: make cxn to the db
-- `/app.ts`: create a GraphQL server based on Apollo lib -> create Express server -> wrap GraphQL server around Express server -> start cxn to DB
