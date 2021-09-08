@@ -4,13 +4,25 @@ import { Arg, Mutation, Resolver } from "type-graphql";
 import { User } from "../models/User";
 import { RegisterInput } from "../types/register_input";
 import { UserMutationResponse } from "../types/user_mutation_res";
+import { validateUserInput } from "../utils/validate_user_input";
 
 @Resolver()
 export class UserResolver {
   @Mutation((_return) => UserMutationResponse, { nullable: true })
   // ? need to transform all these args from TS -> type-graphql -> using @Arg decorator
-  async register(@Arg("registerInput") { username, password, email }: RegisterInput): Promise<UserMutationResponse> {
+  async register(@Arg("registerInput") registerInput: RegisterInput): Promise<UserMutationResponse> {
+    const validatingUserInput = validateUserInput(registerInput);
+    if (validatingUserInput !== null) {
+      return {
+        code: 400,
+        success: false,
+        message: "Validate user input failed.",
+        gql_field_error: [validatingUserInput]
+      };
+    }
+
     try {
+      const { username, email, password } = registerInput;
       const existingUser = await User.findOne({
         where: [{ username }, { email }]
       }); // findOne from typeorm
