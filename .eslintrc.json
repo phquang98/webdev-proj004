@@ -41,7 +41,7 @@
     "no-var": "warn",
     "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
     "spaced-comment": "error",
-    "no-magic-numbers": ["warn", { "ignore": [0] }], // controversial
+    "no-magic-numbers": ["off", { "ignore": [0] }], // controversial
     "eqeqeq": "error",
     "node/no-missing-import": "off", // work around, and e-p-i also check this
     "node/no-unsupported-features/es-syntax": ["error", { "ignores": ["modules"] }], // read README
