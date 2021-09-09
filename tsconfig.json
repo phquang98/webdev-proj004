@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5", // or "es2020"
+    "target": "es6", // fix for type-goose
     "module": "commonjs",
     "lib": ["dom", "es2015", "es5", "es6", "es2020"],
     "sourceMap": true,
