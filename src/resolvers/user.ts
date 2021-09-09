@@ -2,6 +2,7 @@ import argon2 from "argon2";
 import { Arg, Mutation, Resolver } from "type-graphql";
 
 import { User } from "../models/User";
+import { LoginInput } from "../types/login_input";
 import { RegisterInput } from "../types/register_input";
 import { UserMutationResponse } from "../types/user_mutation_res";
 import { validateUserInput } from "../utils/validate_user_input";
@@ -55,6 +56,63 @@ export class UserResolver {
           user: await User.save(newUser)
         };
       }
+    } catch (error) {
+      console.log(error);
+      return {
+        code: 500,
+        success: false,
+        message: `Internal server error, ${error}`
+      };
+    }
+  }
+
+  @Mutation((_return) => UserMutationResponse)
+  async login(@Arg("loginInputNe") loginInput: LoginInput): Promise<UserMutationResponse> {
+    try {
+      // --- Check username or email ---
+      const tryToLoginUser = await User.findOne(
+        loginInput.usernameOrEmail.includes("@")
+          ? { email: loginInput.usernameOrEmail }
+          : { username: loginInput.usernameOrEmail }
+      );
+
+      if (!tryToLoginUser) {
+        return {
+          code: 401,
+          success: false,
+          message: "Username or email do not exist.",
+          gql_field_error: [
+            {
+              errored_field: loginInput.usernameOrEmail.includes("@") ? "email" : "username",
+              gql_error_message: `${loginInput.usernameOrEmail.includes("@") ? "Email" : "Username"} not existed taken!`
+            }
+          ]
+        };
+      }
+
+      // --- Check pass ---
+      const isPassValid = await argon2.verify(tryToLoginUser.password, loginInput.password);
+
+      if (!isPassValid) {
+        return {
+          code: 401,
+          success: false,
+          message: "Wrong password.",
+          gql_field_error: [
+            {
+              errored_field: "password",
+              gql_error_message: "Wrong password for that failed login username or email."
+            }
+          ]
+        };
+      }
+
+      return {
+        code: 200,
+        success: true,
+        message: "User login OK!",
+        user: tryToLoginUser
+      };
     } catch (error) {
       console.log(error);
       return {
