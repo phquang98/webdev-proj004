@@ -13,6 +13,7 @@ import { buildSchema } from "type-graphql";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
 
 import { makeCXNtoDB } from "./config";
+import { TestingResolver } from "./resolvers/testData";
 import { HelloResolver } from "./resolvers/hello";
 import { UserResolver } from "./resolvers/user";
 import { COOKIE_NAME, mongoSecret, session_db_pass, session_db_username, __prod__ } from "./utils/constants";
@@ -59,7 +60,7 @@ const startBackend = async (): Promise<void> => {
   // --- GraphQL Server ---
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [HelloResolver, UserResolver],
+      resolvers: [HelloResolver, UserResolver, TestingResolver], // TODO: del cai thua
       validate: false
     }),
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],

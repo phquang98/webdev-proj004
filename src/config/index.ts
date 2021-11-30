@@ -1,12 +1,13 @@
 import * as dotenv from "dotenv";
 import { createConnection, ConnectionOptions } from "typeorm";
+import { DataTest } from "../models/DataTest";
 
 import { Post } from "../models/Post";
 import { User } from "../models/User";
 
 dotenv.config(); // read key-value pairs from .env
 
-const makeCXNtoDB = async () => {
+const makeCXNtoDB = async (): Promise<void> => {
   if (
     !(
       "DB_PORT" in process.env ||
@@ -24,7 +25,7 @@ const makeCXNtoDB = async () => {
       username: process.env.DB_USERNAME ?? "postgres",
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [User, Post],
+      entities: [User, Post, DataTest],
       synchronize: true,
       logging: true
     };
